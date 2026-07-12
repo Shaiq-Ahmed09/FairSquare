@@ -48,7 +48,6 @@ The project is built entirely on a modern, decoupled Python-based Data Science s
 Python installations share global libraries by default. Running multiple projects globally can lead to *dependency hell*, where upgrading a library for Project A breaks Project B. 
 A virtual environment creates an **isolated sandbox directory**. It maintains a local copy of the Python executable and packages inside the project root, ensuring exact reproducibility without polluting system-wide paths.
 
----
 
 ### Project Setup Step-by-Step
 
@@ -76,7 +75,6 @@ python3 -m venv venv
 source venv/bin/activate
 ```
 
----
 
 **Install Core Dependencies:**
 Ensure your local pip installer is updated, then compile the environment stack:
