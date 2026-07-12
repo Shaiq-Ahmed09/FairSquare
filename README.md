@@ -101,3 +101,26 @@ Because predicting real estate value is a continuous variable problem, the data 
 **Random Forest Regressor**: An ensemble bagger utilized to limit overfitting trends across highly fragmented feature nodes.
 
 **XGBoost (Extreme Gradient Boosting)**: The ultimate production model deployed to handle complex multi-variate dependencies (e.g., the intersection of City, Furnishing Status, and BHK Type).
+
+**3. Model Evaluation Metrics**
+
+Models are scored and benchmarked utilizing:
+
+**Mean Absolute Error (MAE)**: Expresses structural deviation errors directly in standard currency (INR Value), making performance easily interpretable for developers and real-world users.
+
+**Root Mean Squared Logarithmic Error (RMSLE)**: Used to ensure that errors on premium luxury villas (e.g., a ₹15 Crore property in South Mumbai) don't disproportionately distort the loss function relative to standard middle-tier apartments.
+
+# How to Run the Pipeline
+
+1. Place your dataset (e.g., scraped Pan-India CSV files) inside the /data/raw/ directory.
+
+2. Execute the complete data pipeline:
+```
+   python src/main.py
+```
+
+3. To view detailed model diagnostics and visual residual error plots, spin up the interactive workspace:
+```
+   jupyter notebook notebooks/exploratory_analysis.ipynb
+```
+
