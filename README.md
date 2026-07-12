@@ -7,3 +7,23 @@ By analyzing historical transaction patterns, the model calculates the **Fair Ma
 ---
 
 ## 🏗️ Project Architecture & Pipeline
+
+[ Raw Indian Real Estate Data (CSV) ]
+│
+▼
+[ Data Standardization ] ──► (Converts mixed string 'Cr'/'Lac' to raw INR integers)
+│
+▼
+[ Preprocessing & EDA ]  ──► (Handles missing values, caps outliers using IQR)
+│
+▼
+[ Feature Engineering ]  ──► (Target Encoding for Locality, extracts Super vs Carpet area metrics)
+│
+▼
+[ Model Selection Loop ]  ──► (Evaluates Linear Regression vs Random Forest vs XGBoost)
+│
+▼
+[ Variance Extraction ]  ──► (Deal Score = Predicted FMV - Actual Listing Price)
+│
+▼
+[ Sorted Top Investment Opportunities Dashboard ]
