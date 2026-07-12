@@ -54,8 +54,8 @@ A virtual environment creates an **isolated sandbox directory**. It maintains a 
 **Clone the Repository:**
    
 ```
-   git clone [https://github.com/yourusername/FairSquare.git](https://github.com/yourusername/FairSquare.git)
-   cd FairSquare
+git clone [https://github.com/yourusername/FairSquare.git](https://github.com/yourusername/FairSquare.git)
+cd FairSquare
 ```
 
 ---
@@ -64,8 +64,8 @@ A virtual environment creates an **isolated sandbox directory**. It maintains a 
 
 **Windows:**
 ```
-  python -m venv venv
-  .\venv\Scripts\activate
+python -m venv venv
+.\venv\Scripts\activate
 ```
 
 **MacOS/Linux:**
@@ -124,12 +124,12 @@ Models are scored and benchmarked utilizing:
 
 2. Execute the complete data pipeline:
 ```
-   python src/main.py
+python src/main.py
 ```
 
 3. To view detailed model diagnostics and visual residual error plots, spin up the interactive workspace:
 ```
-   jupyter notebook notebooks/exploratory_analysis.ipynb
+jupyter notebook notebooks/exploratory_analysis.ipynb
 ```
 
 ---
