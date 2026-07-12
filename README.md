@@ -79,3 +79,25 @@ Ensure your local pip installer is updated, then compile the environment stack:
 pip install --upgrade pip
 pip install -r requirements.txt
 ```
+
+# Core Machine Learning Methods Deployed
+
+**1. Advanced Indian Preprocessing & Feature Engineering**
+
+**Text Currency Normalization**: Web-scraped real estate parameters across Indian channels often concatenate text strings into numeric scales (e.g., ₹ 1.25 Cr vs ₹ 85 Lakh). A custom parser regex systematically transforms mixed scalar text elements into standardized numeric base values ($10,000,000 for Crore, $100,000 for Lakh).
+
+**High-Cardinality Target Encoding**: The dataset spans thousands of regional micro-markets (Locality). One-Hot encoding would result in a massive, sparse matrix that introduces high variance. Instead, Target Encoding maps each locality categorical feature to the global expected mean of the target variable (Price per SqFt).
+
+**Structural Discrepancy Multipliers**: Computes engineered features such as:
+   Super-To-Carpet-Ratio = Super Built-Up Area/Carpet Area
+   This captures the hidden overheads often bundled into high-rise society apartments versus independent builder floors.
+
+**3. Supervised Learning Regression Models**
+
+Because predicting real estate value is a continuous variable problem, the data is evaluated against three core architectures:
+
+**Ordinary Least Squares (OLS) Linear Regression**: Serves as the basic linear baseline.
+
+**Random Forest Regressor**: An ensemble bagger utilized to limit overfitting trends across highly fragmented feature nodes.
+
+**XGBoost (Extreme Gradient Boosting)**: The ultimate production model deployed to handle complex multi-variate dependencies (e.g., the intersection of City, Furnishing Status, and BHK Type).
