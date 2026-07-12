@@ -27,3 +27,55 @@ By analyzing historical transaction patterns, the model calculates the **Fair Ma
 │
 ▼
 [ Sorted Top Investment Opportunities Dashboard ]
+
+---
+
+## 🛠️ Tech Stack & Dependencies
+
+The project is built entirely on a modern, decoupled Python-based Data Science stack:
+
+*   **Python (v3.10+)**: Core programming environment providing high numerical computing capabilities.
+*   **Pandas & NumPy**: Utilized for structural vectorization, cross-table indexing, structural cleaning, and matrix transformation of the raw listings dataset.
+*   **Scikit-Learn**: The backbone of the machine learning pipeline. Used for dataset splits (`train_test_split`), numerical scaling, evaluation metrics, and running basic regressors.
+*   **XGBoost & LightGBM**: Advanced gradient-boosted decision tree libraries deployed to isolate complex, non-linear relationships across nested geographical tiers.
+*   **Matplotlib & Seaborn**: Deployed for generating residual error plots, spatial price heatmaps, and feature importance matrices.
+
+---
+
+## 📋 Prerequisites & Local Development Setup
+
+### Why We Use a Virtual Environment (`venv`)
+Python installations share global libraries by default. Running multiple projects globally can lead to *dependency hell*, where upgrading a library for Project A breaks Project B. 
+A virtual environment creates an **isolated sandbox directory**. It maintains a local copy of the Python executable and packages inside the project root, ensuring exact reproducibility without polluting system-wide paths.
+
+### 📥 Project Setup Step-by-Step
+
+**Clone the Repository:**
+   
+```
+   git clone [https://github.com/yourusername/FairSquare.git](https://github.com/yourusername/FairSquare.git)
+   cd FairSquare
+```
+
+# Initialize a Virtual Environment:
+
+**Windows:**
+```
+  python -m venv venv
+  .\venv\Scripts\activate
+```
+
+**MacOS/Linux:**
+
+```
+python3 -m venv venv
+source venv/bin/activate
+```
+
+**Install Core Dependencies:**
+Ensure your local pip installer is updated, then compile the environment stack:
+
+```
+pip install --upgrade pip
+pip install -r requirements.txt
+```
