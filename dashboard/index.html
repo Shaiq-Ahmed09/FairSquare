@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Real Estate Deal Finder — India</title>
+  <meta name="description" content="AI-powered real estate deal finder for India. Predicts fair market value and identifies underpriced listings using XGBoost." />
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+<!-- Loading -->
+<div id="loading">
+  <div class="loading-icon">◌</div>
+  <div class="loading-text">Analysing listings</div>
+  <div class="loading-bar"><div class="loading-bar-fill"></div></div>
+</div>
+
+<!-- App -->
+<div id="app" style="display:none">
+
+  <!-- Header / Navbar -->
+  <header class="header">
+    <div class="header-brand">
+      <img src="FairSquare_Logo.png" class="header-logo" alt="FairSquare Logo" />
+    </div>
+
+    <nav class="nav-links">
+      <a href="#" class="active">Home</a>
+      <a href="#">Support</a>
+      <a href="#">Report a Bug</a>
+      <a href="#">Submit updated dataset</a>
+      <a href="#">All things</a>
+    </nav>
+
+    <div class="header-badge">
+      <span class="dot"></span>
+      <span id="model-accuracy-badge">Model ready</span>
+    </div>
+  </header>
+
+  <!-- KPI Row -->
+  <div class="kpi-row">
+    <div class="kpi-item cyan">
+      <div class="kpi-label">Total Listings</div>
+      <div class="kpi-value" id="kpi-total">—</div>
+    </div>
+    <div class="kpi-item green">
+      <div class="kpi-label">Hot Deals</div>
+      <div class="kpi-value" id="kpi-hot">—</div>
+    </div>
+    <div class="kpi-item green">
+      <div class="kpi-label">Good Deals</div>
+      <div class="kpi-value" id="kpi-good">—</div>
+    </div>
+    <div class="kpi-item muted">
+      <div class="kpi-label">Fair Priced</div>
+      <div class="kpi-value" id="kpi-fair">—</div>
+    </div>
+    <div class="kpi-item red">
+      <div class="kpi-label">Overpriced</div>
+      <div class="kpi-value" id="kpi-over">—</div>
+    </div>
+    <div class="kpi-item cyan">
+      <div class="kpi-label">Model R²</div>
+      <div class="kpi-value" id="kpi-r2">—</div>
+    </div>
+  </div>
+
+  <!-- Charts -->
+  <section class="charts-section">
+    <div class="label">Market Analysis</div>
+    <div class="charts-grid">
+      <div class="chart-cell">
+        <div class="label" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+          <span>Predicted FMV vs Listing Price</span>
+          <select id="scatter-range" onchange="onScatterRangeSelect()" style="background: transparent; border: 1px solid var(--line-strong); border-radius: 4px; color: var(--t2); padding: 4px 8px; font-size: 10px; cursor: pointer; outline: none; text-transform: none;">
+            <option value="0.1,0.2" style="background: #111;" selected>0.10 - 0.20 Cr</option>
+            <option value="0.2,0.3" style="background: #111;">0.20 - 0.30 Cr</option>
+            <option value="0.3,0.4" style="background: #111;">0.30 - 0.40 Cr</option>
+            <option value="0.4,0.5" style="background: #111;">0.40 - 0.50 Cr</option>
+            <option value="0.5,0.75" style="background: #111;">0.50 - 0.75 Cr</option>
+            <option value="0.75,1" style="background: #111;">0.75 - 1.00 Cr</option>
+            <option value="1,1.5" style="background: #111;">1.00 - 1.50 Cr</option>
+            <option value="1.5,2" style="background: #111;">1.50 - 2.00 Cr</option>
+            <option value="2,3" style="background: #111;">2.00 - 3.00 Cr</option>
+            <option value="0,3" style="background: #111;">All (Up to 3.0 Cr)</option>
+          </select>
+        </div>
+        <canvas id="scatterChart"></canvas>
+      </div>
+      <div class="chart-cell">
+        <div class="label">Average Deal Score by City</div>
+        <canvas id="cityChart"></canvas>
+      </div>
+    </div>
+    <div class="charts-bottom">
+      <div class="chart-cell">
+        <div class="label">Deal Distribution</div>
+        <canvas id="distChart"></canvas>
+      </div>
+      <div class="chart-cell">
+        <div class="label">Price vs Area by Property Type</div>
+        <canvas id="bubbleChart"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <!-- Filters -->
+  <div class="filters-bar">
+    <div class="filter-group">
+      <span class="filter-label">Search</span>
+      <input type="text" id="search-input" placeholder="Name, location, city…" />
+    </div>
+    <div class="filter-group">
+      <span class="filter-label">City</span>
+      <select id="filter-city"><option value="">All</option></select>
+    </div>
+    <div class="filter-group">
+      <span class="filter-label">Type</span>
+      <select id="filter-type"><option value="">All</option></select>
+    </div>
+    <div class="filter-group">
+      <span class="filter-label">BHK</span>
+      <select id="filter-bhk">
+        <option value="">Any</option>
+        <option value="1">1 BHK</option>
+        <option value="2">2 BHK</option>
+        <option value="3">3 BHK</option>
+        <option value="4">4 BHK</option>
+        <option value="5">5+</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <span class="filter-label">Deal</span>
+      <select id="filter-deal">
+        <option value="">All</option>
+        <option value="Hot Deal">Hot Deal</option>
+        <option value="Good Deal">Good Deal</option>
+        <option value="Fair Price">Fair Price</option>
+        <option value="Slightly Overpriced">Slightly Overpriced</option>
+        <option value="Overpriced">Overpriced</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <span class="filter-label">Dataset</span>
+      <select id="filter-source"><option value="">All</option></select>
+    </div>
+    <button class="btn-reset" onclick="resetFilters()">Reset</button>
+  </div>
+
+  <!-- Table -->
+  <section class="table-section">
+    <div class="table-meta">
+      <div class="label" style="margin:0">Listings</div>
+      <div class="table-count">
+        <strong id="count-shown">—</strong> of <strong id="count-total">—</strong>
+      </div>
+    </div>
+
+    <div class="table-wrapper">
+      <table id="listings-table">
+        <thead>
+          <tr>
+            <th onclick="sortBy('rank')">#<span class="sort-icon">↕</span></th>
+            <th>Property</th>
+            <th onclick="sortBy('city')">City<span class="sort-icon">↕</span></th>
+            <th onclick="sortBy('bhk')">BHK<span class="sort-icon">↕</span></th>
+            <th onclick="sortBy('total_area')">sqft<span class="sort-icon">↕</span></th>
+            <th onclick="sortBy('actual_price')">Listing<span class="sort-icon">↕</span></th>
+            <th onclick="sortBy('predicted_fmv')">FMV<span class="sort-icon">↕</span></th>
+            <th onclick="sortBy('deal_pct')">Deal %<span class="sort-icon">↕</span></th>
+            <th>Tag</th>
+          </tr>
+        </thead>
+        <tbody id="listings-tbody"></tbody>
+      </table>
+    </div>
+
+    <div class="pagination">
+      <div class="pagination-info" id="page-info"></div>
+      <div class="pagination-btns" id="page-btns"></div>
+    </div>
+  </section>
+
+</div><!-- /#app -->
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModalOutside(event)">
+  <div class="modal" id="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+
+    <div class="modal-header">
+      <div class="modal-title" id="modal-title"></div>
+      <div class="modal-subtitle" id="modal-subtitle"></div>
+    </div>
+
+    <div class="modal-score">
+      <div>
+        <div class="modal-score-big" id="modal-score-pct"></div>
+        <div class="modal-score-meta">Deal Score</div>
+      </div>
+      <div>
+        <div class="modal-score-save" id="modal-score-save"></div>
+        <div class="modal-score-meta" id="modal-score-tag"></div>
+      </div>
+    </div>
+
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
