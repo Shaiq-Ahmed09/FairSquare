@@ -42,13 +42,15 @@ The project is built entirely on a modern, decoupled Python-based Data Science s
 
 ---
 
-## 📋 Prerequisites & Local Development Setup
+## Prerequisites & Local Development Setup
 
 ### Why We Use a Virtual Environment (`venv`)
 Python installations share global libraries by default. Running multiple projects globally can lead to *dependency hell*, where upgrading a library for Project A breaks Project B. 
 A virtual environment creates an **isolated sandbox directory**. It maintains a local copy of the Python executable and packages inside the project root, ensuring exact reproducibility without polluting system-wide paths.
 
-### 📥 Project Setup Step-by-Step
+---
+
+### Project Setup Step-by-Step
 
 **Clone the Repository:**
    
@@ -56,6 +58,8 @@ A virtual environment creates an **isolated sandbox directory**. It maintains a 
    git clone [https://github.com/yourusername/FairSquare.git](https://github.com/yourusername/FairSquare.git)
    cd FairSquare
 ```
+
+---
 
 # Initialize a Virtual Environment:
 
@@ -72,6 +76,8 @@ python3 -m venv venv
 source venv/bin/activate
 ```
 
+---
+
 **Install Core Dependencies:**
 Ensure your local pip installer is updated, then compile the environment stack:
 
@@ -79,6 +85,8 @@ Ensure your local pip installer is updated, then compile the environment stack:
 pip install --upgrade pip
 pip install -r requirements.txt
 ```
+
+---
 
 # Core Machine Learning Methods Deployed
 
@@ -92,7 +100,7 @@ pip install -r requirements.txt
    Super-To-Carpet-Ratio = Super Built-Up Area/Carpet Area
    This captures the hidden overheads often bundled into high-rise society apartments versus independent builder floors.
 
-**3. Supervised Learning Regression Models**
+**2. Supervised Learning Regression Models**
 
 Because predicting real estate value is a continuous variable problem, the data is evaluated against three core architectures:
 
@@ -110,6 +118,8 @@ Models are scored and benchmarked utilizing:
 
 **Root Mean Squared Logarithmic Error (RMSLE)**: Used to ensure that errors on premium luxury villas (e.g., a ₹15 Crore property in South Mumbai) don't disproportionately distort the loss function relative to standard middle-tier apartments.
 
+---
+
 # How to Run the Pipeline
 
 1. Place your dataset (e.g., scraped Pan-India CSV files) inside the /data/raw/ directory.
@@ -124,3 +134,4 @@ Models are scored and benchmarked utilizing:
    jupyter notebook notebooks/exploratory_analysis.ipynb
 ```
 
+---
