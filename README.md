@@ -133,3 +133,5 @@ jupyter notebook notebooks/exploratory_analysis.ipynb
 ```
 
 ---
+
+**NOTE: Only limited data is available. Only Tier 1 cities are included for now. Will bring updates for other cities as well.**
