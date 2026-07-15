@@ -6,7 +6,7 @@ By analyzing historical transaction patterns, the model calculates the **Fair Ma
 
 ---
 
-## 🏗️ Project Architecture & Pipeline
+## Project Architecture & Pipeline
 
 [ Raw Indian Real Estate Data (CSV) ]
 │
@@ -30,7 +30,7 @@ By analyzing historical transaction patterns, the model calculates the **Fair Ma
 
 ---
 
-## 🛠️ Tech Stack & Dependencies
+## Tech Stack & Dependencies
 
 The project is built entirely on a modern, decoupled Python-based Data Science stack:
 
